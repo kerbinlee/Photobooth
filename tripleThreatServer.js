@@ -13,8 +13,8 @@ app.use(express.static('public')); // serve static files from public
 // if this succeeds, exits, and rest of the pipeline does not get done
 
 // Case 2: queries
-// An example query URL is "138.68.25.50:???/query?img=hula"
-app.get('/query', function (request, response){
+// An example query URL is "138.68.25.50:???/change?img=hula"
+app.get('/change', function (request, response){
     console.log("query");
     query = request.url.split("?")[1]; // get query string
     if (query) {
@@ -57,20 +57,18 @@ function sendCode(code,response,message) {
 // Stuff for dummy query answering
 // We'll replace this with a real database someday! 
 function answer(query, response) {
-var labels = {hula:
-"Dance, Performing Arts, Sports, Entertainment, QuinceaÃ±era, Event, Hula, Folk Dance",
-	      eagle: "Bird, Beak, Bird Of Prey, Eagle, Vertebrate, Bald Eagle, Fauna, Accipitriformes, Wing",
-	      redwoods: "Habitat, Vegetation, Natural Environment, Woodland, Tree, Forest, Green, Ecosystem, Rainforest, Old Growth Forest"};
-
     console.log("answering");
-    kvpair = query.split("=");
-    labelStr = labels[kvpair[1]];
-    if (labelStr) {
+    var parsedQuery = query.split("&");
+    var imgName = parsedQuery[0].split("=")[1];
+    var newLabel = parsedQuery[1].split("=")[1];
+    var op = parsedQuery[2].split("=")[1];
+    console.log(imgName + ' ' + newLabel + ' ' + op);
+    /*if (labelStr) {
 	    response.status(200);
 	    response.type("text/json");
 	    response.send(labelStr);
     } else {
 	    sendCode(400,response,"requested photo not found");
-    }
+    }*/
 }
 

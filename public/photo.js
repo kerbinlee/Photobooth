@@ -35,6 +35,25 @@ function uploadFile() {
 	image.src = "sample.png";
 	document.body.appendChild(image);*/
         unfadeImage();
+	
+	// add labels paragraph
+	var p = document.createElement('p');
+	p.id = "labels";
+	document.body.appendChild(p);
+	// add labels input box
+	var input = document.createElement('input');
+	input.className = "labelInput";
+	input.id = selectedFile.name + "LabelInput";
+	input.type = "text";
+	console.log(input);document.body.appendChild(input);
+	// add labels input add/submit button
+	var button = document.createElement('button');
+	button.className = "labelButton";
+	button.id = selectedFile.name + "LabelAdd";
+	button.setAttribute('onclick','labelAdd('+selectedFile.name+');');
+	button.onclick = function() { labelAdd(selectedFile.name); }; // for IE
+	button.innerHTML = "Add";
+console.log(button);	document.body.appendChild(button);
     }
     oReq.send(formData);
 }
@@ -51,5 +70,25 @@ function unfadeImage() {
     // set source of uploaded image to server file
     var selectedFile = document.getElementById('fileSelector').files[0];
     image.src = selectedFile.name;
+    return;
 }
 
+function labelAdd(filename) {
+	// create new AJAX request
+	var oReq = new XMLHttpRequest();
+
+	var newLabel = document.getElementById(filename + "LabelInput").value;
+	var url = "http://138.68.25.50:7829/change?img=" + filename + "&label=" + newLabel + "&op=add";
+	// setup callback
+	oReq.addEventListener("load", reqListener);
+	// load occurs when operation is completed, response is back
+	// create AJAX GET HTTP request
+	oReq.open("GET", url); // writes HTTP req head
+	oReq.send(); // initiates transfer
+}
+
+// label callback function
+function reqListener () {
+	var pgh = document.getElementById('labels');
+	pgh.textContent = this.responseText;
+}
