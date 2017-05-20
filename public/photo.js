@@ -1,7 +1,7 @@
 // uploads an image within a form object.  This currently seems
 // to be the easiest way to send a big binary file. 
 function uploadFile() {
-    var url = "http://138.68.25.50:60401";
+    var url = "http://138.68.25.50:7829";
 
     // where we find the file handle
     var selectedFile = document.getElementById('fileSelector').files[0];
@@ -20,6 +20,9 @@ function uploadFile() {
     oReq.onload = function() {
 	// the response, in case we want to look at it
 	console.log(oReq.responseText);
+	var image = document.createElement('img');
+	image.src = "sample.png";
+	document.body.appendChild(image);
     }
     oReq.send(formData);
 }
