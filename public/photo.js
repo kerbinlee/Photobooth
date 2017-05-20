@@ -5,6 +5,17 @@ function uploadFile() {
 
     // where we find the file handle
     var selectedFile = document.getElementById('fileSelector').files[0];
+
+    // display uploading image
+    var image = document.getElementById('uploadingImage'); 
+    var fr = new FileReader();
+    // anonymous callback uses file as image source
+    fr.onload = function () {
+	image.src = fr.result;
+    };
+    fr.readAsDataURL(selectedFile); // begin reading
+    fadeImage(); //fade image while uploading
+
     var formData = new FormData(); 
     // stick the file into the form
     formData.append("userfile", selectedFile);
@@ -20,9 +31,25 @@ function uploadFile() {
     oReq.onload = function() {
 	// the response, in case we want to look at it
 	console.log(oReq.responseText);
-	var image = document.createElement('img');
+	/*var image = document.createElement('img');
 	image.src = "sample.png";
-	document.body.appendChild(image);
+	document.body.appendChild(image);*/
+        unfadeImage();
     }
     oReq.send(formData);
 }
+
+function fadeImage() {
+    var image = document.getElementById('uploadingImage');
+    image.style.opacity = 0.5;
+}
+
+function unfadeImage() {
+    var image = document.getElementById('uploadingImage');
+    image.style.opacity = 1;
+    
+    // set source of uploaded image to server file
+    var selectedFile = document.getElementById('fileSelector').files[0];
+    image.src = selectedFile.name;
+}
+
