@@ -1,20 +1,47 @@
+<!-- 
+    Jason Hui 913362314
+    Kevin lee 999835085
+    Bryan Kim 997768578 
+-->
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<title>Flexbox example</title>
-<!-- <link rel="stylesheet" type="text/css" href="reset.css"> -->
-<link rel="stylesheet" type="text/css" href="photo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>photobooth</title>
+    
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="photo.css">
 </head>
+    
 <body>
 
-<input type="file" id="fileSelector">
-<button id="uploadButton" onclick="uploadFile()">upload</button>
+    <img src="/photobooth/photoboothLogo.png">
 
-<img id="uploadingImage"/>
+    <main>
+        <div id = "columnRight">
+            <div id = "mobile">
+                <img src="photobooth/uploadIcon-01.png" id="upload_icon" onclick="show_upload()"/> 
+                <img src="photobooth/filterIcon-01.png"/> 
+                <img src="photobooth/favoritesIcon.png"/> 
+            </div>
+                  
+            <input type="file" id="fileSelector">
+            <button id="uploadButton" onclick="uploadFile()">upload</button>
+            <!--<img id="theImage"/> -->
+                
+            <div id ="flexyTheImage"> 
+        	   <img id="theImage" src=""/> 
+            </div>
 
-<script src="photo.js"></script>
+            <!-- <button id="fadeButton" onclick="fadeImageButton()">Fade</button -->
+        </div>
+
+        <div id="threePhotosContainer">
+        </div>
+     </main>
+    
+    <script src="photo.js"></script>
 </body>
 </html>
-

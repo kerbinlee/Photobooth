@@ -1,12 +1,235 @@
 body {
      font-family: â€˜Helvetica Neueâ€™, Helvetica, Arial, sans-serif; 
      display: flex;     
-     min-height: 100vh;  /* need this line to tell body to fill viewport */
+     min-height: 8vh;  /* need this line to tell body to fill viewport */
      flex-direction: column;
      font-size: large;
      align-items: center;
      }
 
-button {
+main {
+    
+    display:flex;
+    flex-direction: row-reverse;
+}
+#fileSelector {
+    background:#998877;
+    color: white; 
+}
+#uploadButton {
+    background:#998877;
+    color: white;
+}
+
+
+div#columnRight {
+    background: #885544;
+    display:flex;
+    flex-direction: column;
+    max-width: 20vw;
+}
+
+#threePhotosContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2px;
+  grid-auto-rows: minmax(5px, auto);
+}
+
+.flexy {
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    background: #998877;
+    border-style: solid;
+    align-content: flex-end;
+    flex: 1;
+    position: relative; /* needed to make hmburger display in image */
+    
+}
+
+input[type="file"] {
+  font-size: large;
+  appearance: none;
+  box-shadow: none;
+  border-radius: none;
+}
+
+#burgerMenu {
+    max-height: 30px;
+    max-width: 30px;
+    align-self: flex-end;
+    margin-left:30px;
+    
+    display: inline;
+}
+
+div#flexyTheImage {
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    max-width:300px;
+    max-height: 350px;
+    min-height: 10px;
+    background: #998877;
+    border-style: solid;
+    align-content: flex-end;
+    flex:1;
+    position: relative;
+    
+}
+
+
+
+#theImage {
+    margin: 30px;
+    max-width:300px;
+    max-height: 350px;
+    min-height: 200px;
+    background: #998877;
+    border-style: solid; 
+   transition-timing-function: ease;
+    transition-property: all;
+    transition-duration: 3s;
+    transition: opacity 4s;
+    opacity:0.3;
+    position: relative;
+}
+
+img {
+   
+    /*max-width:200px;*/
+    display: inline;
+    position: relative;
+}
+
+.imageContainer {
+     display: inline;
+    position: relative;
+    /*min-height: 250px;*/
+    /*height: 250px;*/
+    width: 100%;
+    
 
 }
+
+.imageDiv {
+    display: inline;
+    position: relative;
+    /*min-height: 250px;*/
+    height: 250px;
+    width: 100%;
+
+}
+
+#burgerMenu {
+    min-height: 30px;
+    min-width: 30px;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+
+.labelBox {
+    /*display: grid;*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /*min-height: 30px;*/
+    background: #885544;
+    /*min-width:200px; */
+    max-width: 280px;
+    /*align-self: flex-end;*/
+   
+    
+     /*display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2px;
+  grid-auto-rows: minmax(5px, auto);*/
+
+    
+}
+#tag {
+    
+    margin: 5px;
+    background: #885544; 
+    /*max-width: 70px; 
+    max-height:20px;*/
+    color:white;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+#cross_Image {
+    max-height: 15px;
+    max-width: 15px;
+    margin-right: 3px;
+}
+
+#label_add_image {
+    
+    min-width: 30px;
+    min-height: 20px;
+}
+
+@media (max-width: 600px) {
+    
+    
+div#columnRight {
+    background: white;
+    display:flex;
+    flex-direction: column;
+   min-height: 100px;
+    min-width: 90vw;
+    
+}
+#fileSelector {
+    background:#998877;
+    color: white; 
+    display:none;
+}
+#uploadButton {
+    background:#998877;
+    color: white;
+    display: none;
+}
+
+    
+    
+#threePhotosContainer {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 2px;
+  grid-auto-rows: minmax(5px, auto);
+}
+    
+    
+    main {
+    
+    display:flex;
+    flex-direction: column;
+}
+div#flexyTheImage {
+display:none;
+    background: white;
+    }
+ } 
+
+
+/*#tag_name {
+    font-size: 7px; 
+}*/
+
+/*labelInput {
+    min-width: 30px;
+    background-color: pink;
+}
+
+labelbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}*/
