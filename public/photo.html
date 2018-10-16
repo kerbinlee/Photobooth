@@ -1,44 +1,79 @@
-<!-- 
-    Jason Hui 913362314
-    Kevin lee 999835085
-    Bryan Kim 997768578 
--->
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <title>photobooth</title>
+    <title>Photobooth</title>
     
     <link rel="stylesheet" type="text/css" href="reset.css">
     <link rel="stylesheet" type="text/css" href="photo.css">
 </head>
     
 <body>
-
-    <img src="/photobooth/photoboothLogo.png">
-
+    <h1>Photobooth.</h1>
+    
+    
+    
+    <div id="results_tag">
+    
+    </div>
     <main>
-        <div id = "columnRight">
-            <div id = "mobile">
-                <img src="photobooth/uploadIcon-01.png" id="upload_icon" onclick="show_upload()"/> 
-                <img src="photobooth/filterIcon-01.png"/> 
-                <img src="photobooth/favoritesIcon.png"/> 
-            </div>
-                  
-            <input type="file" id="fileSelector">
-            <button id="uploadButton" onclick="uploadFile()">upload</button>
-            <!--<img id="theImage"/> -->
-                
-            <div id ="flexyTheImage"> 
-        	   <img id="theImage" src=""/> 
-            </div>
-
-            <!-- <button id="fadeButton" onclick="fadeImageButton()">Fade</button -->
+        <div id="threePhotosContainer">
         </div>
 
-        <div id="threePhotosContainer">
+        <div id = "columnRight">
+                            <div id = "mobile">
+                                        <div id = "upload_m" class="upload" onclick="show_upload(1)">
+                                                <img src="photobooth/uploadIcon-01.png" id="upload_icon_m" class="sidebarIcon" /> 
+                                                <div class="desktopText">upload</div>
+                                            
+                                        </div>
+                                        <div id="search_tag_m" class ="search_tag "onclick="show_filter(1)">
+                                                <img class="sidebarIcon" src="photobooth/filterIcon-01.png"/>
+                                                <div class="desktopText">filter</div>
+                                        </div>
+                                         <div id="favorites_m">
+                                                <img class="sidebarIcon"  id="fav_icon_m" src="photobooth/favoritesIcon.png"/> 
+                                                <div class="desktopText">favorites</div>
+                                        </div>
+                            </div>
+                <div id = "upload" onclick="show_upload(1)">
+                    <img src="photobooth/uploadIcon-01.png" id="upload_icon" class="sidebarIcon" /> 
+                    <div class="desktopText">upload</div>
+                </div>
+                <div id="shown_upload">
+                    <input type="file" id="fileSelector">
+                    <button id="uploadButton" onclick="uploadFile()">upload</button>
+                    <div id="show_turn_live">
+                            Apply Label Detection?
+                            <div id="show_turn_live_yes">YES</div>    
+                            <div id="show_turn_live_no">NO</div>
+                    </div>
+                </div>  
+                
+                <div id="search_tag" onclick="show_filter(1)">
+                    <img class="sidebarIcon" src="photobooth/filterIcon-01.png"/>
+                    <div class="desktopText">filter</div>
+                </div>
+                <div id="shown_filter">
+                    <input type="text" id="search_tag_input" placeholder="filter" onkeypress="return enterInputTagSearch(event)">
+                    <div id="filterButtons">
+                        <button id="filterButton" onclick="InputTagSearch()">enter</button>
+                        <button id="clearfilterButton" onclick="clearFilter()">clear filter</button>
+                    </div>
+                </div>
+                <div id="favorites" onclick = "load_fav()">
+                    <img class="sidebarIcon" src="photobooth/favoritesIcon.png"/> 
+                    <div class="desktopText">favorites</div>
+                </div>
+                <div id = "fav_menu">
+                    <div id = "fav_button">
+                        <button id = "back_to_home" onclick = "fav_to_home()">back to homepage</button>
+                    </div>
+                </div>
+           
+                  
+           
         </div>
      </main>
     

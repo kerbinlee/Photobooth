@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Photobooth</title>
+    
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="photo.css">
+</head>
+    <style>
+    
+    @font-face {
+    font-family: 'Dani'; /*a name to be used later*/
+    src: url('/photobooth/fontGoudy/GoudyStd-Bold.otf'); /*URL to font*/
+}
+        
+        .enterButton {
+            font-family: 'Dani';
+            background: #885544;
+            color: white;
+            border: solid;
+            align-self: center;
+            border-style: solid;
+            border-color: black;
+            font-size: xx-large;
+            text-align: center;
+            min-height: 30px;
+            min-width:120px;
+            margin:30px;
+            margin-bottom: 70px;
+            
+            
+        }
+        
+        .welcomeToPhotoBooth {
+            font-family: 'Dani';
+            color:  #885544; 
+            font-size: 100px;
+            align-self: center;
+        }
+                .welcomeToPhotoBooth_s {
+            font-family: 'Dani';
+            color:  #885544; 
+            font-size: 40px;
+            align-self: center;
+        }
+        
+        #splashFlex {
+       padding: 30vw;
+            
+        display:flex;
+        flex-direction: column;
+        align-self: center; 
+        }
+    </style>
+<body>
+    
+    
+        
+        
+    <div id="splashFlex">   
+                <div class ="welcomeToPhotoBooth">
+                      Welcome to
+                </div>
+                <div class ="welcomeToPhotoBooth">
+                     PhotoBooth.
+                </div>
+          <div class ="welcomeToPhotoBooth">
+             <!--   <img src="/photobooth/photoboothLogo.png"> -->
+                <a href="photo.html"> <button class="enterButton"><b>enter</b></button> </a>     
+                </div>
+                <div class ="welcomeToPhotoBooth_s">
+                      Designed by Dani Macedo,
+                </div>
+                <div class ="welcomeToPhotoBooth_s">
+                     Powered by the Google
+                </div>
+                <div class ="welcomeToPhotoBooth_s">    
+                Cloud Vision API
+                </div>
+
+    </div>      
+  
+        
+        
+    <script src="photo.js"></script>
+</body>
+</html>
