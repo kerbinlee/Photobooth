@@ -1,6 +1,6 @@
 // set port number of server
-var portNumber = 10371;
-var url = "http://138.68.25.50:"+portNumber;
+var portNumber = 8080;
+var url = "."; //"https://maythird.ddns.net:"+portNumber;
 
 // display all photos
 load_Photos();

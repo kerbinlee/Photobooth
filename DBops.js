@@ -4,8 +4,8 @@
 // Table was created with:
 // CREATE TABLE PhotoLabels (fileName TEXT UNIQUE NOT NULL PRIMARY KEY, labels TEXT, favorite INTEGER)
 
-var portNumber = 10371;
-var gcvKey = "";
+var portNumber = 8080;
+var gcvKey = "AIzaSyBQ0FVNWYwXYNDXTLInrPQTMKtYgqyMqTA";
 
 var LIVE = true; // use Google Cloud Vision?
 var sendrequest = require('request');
@@ -17,6 +17,12 @@ var sqlite3 = require("sqlite3").verbose();  // use sqlite
 var dbFile = "photos.db"
 var db = new sqlite3.Database(dbFile);  // new object, old DB
 
+var fs = require('fs');
+var https = require('https');
+var privateKey  = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/cert.pem', 'utf8');
+var ca = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/chain.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate, ca: ca};
 
 function errorCallback(err) {
     if (err) {
@@ -162,7 +168,7 @@ app.post('/query', function (request, response) {
                                         {
                                             "source": 
                                             {
-                                                "imageUri": "http://138.68.25.50:"+portNumber+'/'+fileName_encoded
+                                                "imageUri": "https://maythird.ddns.net:"+portNumber+'/'+fileName_encoded
                                             }
                                         },
                                         "features": 
@@ -273,8 +279,12 @@ app.post('/query', function (request, response) {
     }
 });
 
+var httpsServer = https.createServer(credentials, app);
+
+httpsServer.listen(portNumber);
+
 // tell express to listen to correct port number
-app.listen(portNumber);
+//app.listen(portNumber, "0.0.0.0");
 
 // sends off an HTTP response with the given status code and message
 function sendCode(code,response,message) {
