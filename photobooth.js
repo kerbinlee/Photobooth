@@ -37,6 +37,10 @@ var formidable = require('formidable');
 // make a new express server object
 var app = express();
 
+// enable logging
+var morgan  = require('morgan');
+app.use(morgan('combined'));
+
 // get cookie for session; creates cookie and database if needed
 app.use(require('./cookies'));
 
