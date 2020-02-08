@@ -9,12 +9,12 @@ var sendrequest = require('request');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 // read in SSL certificate files
-var fs = require('fs');
-var https = require('https');
-var privateKey  = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/privkey.pem', 'utf8');
-var certificate = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/cert.pem', 'utf8');
-var ca = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/chain.pem', 'utf8');
-var credentials = {key: privateKey, cert: certificate, ca: ca};
+//var fs = require('fs');
+//var https = require('https');
+//var privateKey  = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/privkey.pem', 'utf8');
+//var certificate = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/cert.pem', 'utf8');
+//var ca = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/chain.pem', 'utf8');
+//var credentials = {key: privateKey, cert: certificate, ca: ca};
 
 function errorCallback(err) {
     if (err) {
@@ -243,11 +243,11 @@ app.post('/query', function (request, response) {
 });
 
 // create https server and listen to speicified port number
-var httpsServer = https.createServer(credentials, app);
-httpsServer.listen(portNumber);
+//var httpsServer = https.createServer(credentials, app);
+//httpsServer.listen(portNumber);
 
 // tell express to listen to correct port number
-//app.listen(portNumber, "0.0.0.0");
+app.listen(portNumber, "0.0.0.0");
 
 // sends off an HTTP response with the given status code and message
 function sendCode(code,response,message) {
