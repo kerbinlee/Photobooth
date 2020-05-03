@@ -1,20 +1,12 @@
-var domain = "https://maythird.ddns.net"
-var portNumber = 8080;
+var domain = process.env.DOMAIN;
+var portNumber = process.env.PORT_NUMBER;
 // Google Cloud Vision API key
-var gcvKey = "AIzaSyBQ0FVNWYwXYNDXTLInrPQTMKtYgqyMqTA";
+var gcvKey = process.env.GCV_KEY;
 // Google Cloud Vision API URL
 var gcvurl = 'https://vision.googleapis.com/v1/images:annotate?key='+gcvKey;
-
+console.log("port " + portNumber);
 var sendrequest = require('request');
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
-// read in SSL certificate files
-//var fs = require('fs');
-//var https = require('https');
-//var privateKey  = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/privkey.pem', 'utf8');
-//var certificate = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/cert.pem', 'utf8');
-//var ca = fs.readFileSync('/etc/letsencrypt/live/maythird.ddns.net/chain.pem', 'utf8');
-//var credentials = {key: privateKey, cert: certificate, ca: ca};
 
 function errorCallback(err) {
     if (err) {
@@ -241,10 +233,6 @@ app.post('/query', function (request, response) {
         sendCode(400,response,'query not recognized');
     }
 });
-
-// create https server and listen to speicified port number
-//var httpsServer = https.createServer(credentials, app);
-//httpsServer.listen(portNumber);
 
 // tell express to listen to correct port number
 app.listen(portNumber, "0.0.0.0");
