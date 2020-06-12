@@ -34,14 +34,28 @@ var morgan  = require('morgan');
 app.use(morgan('combined'));
 
 // get cookie for session; creates cookie and database if needed
-app.use(require('./cookies'));
+// app.use(require('./cookies'));
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // use SQLite3
 var sqlite3 = require("sqlite3").verbose();
+// use session id as name
+var dbFile = "database.db";
+var db = new sqlite3.Database(dbFile);
+
+// command to create table in database
+let cmdStr = "CREATE TABLE PhotoLabels (fileName TEXT UNIQUE NOT NULL PRIMARY KEY, labels TEXT, favorite INTEGER)"
+// run command to create table
+db.run(cmdStr);
 
 // function to get SQLite database instance based on session id
-function getDb(sid) {
-    var dbFile = sid + ".db"
+function getDb() {
+    // var dbFile = sid + ".db"
     var db = new sqlite3.Database(dbFile);  // new object, uses existing database
     return db;
 }
@@ -55,7 +69,7 @@ app.use(express.static('public')); // serve static files from public directory
 // Case 2: queries
 app.get('/query', function (request, response) {
     // get database based on session id from cookie
-    var db = getDb(request.cookies.sid);
+    var db = getDb();
     query = request.url.split("?"); // split query string
     // if query exists
     if (query[1]) {
@@ -101,7 +115,7 @@ app.get('/query', function (request, response) {
 // Responds to any POST request
 app.post('/query', function (request, response) {
     // get database based on session id from cookie
-    var db = getDb(request.cookies.sid);
+    var db = getDb();
     query = request.url.split("?"); // split query string
     // if query exists
     if (query[1]) {
