@@ -1,8 +1,5 @@
 var url = ".";
 
-// display all photos
-load_Photos();
-
 function uploadFile() {
     show_turn_live();
 }
@@ -120,95 +117,6 @@ function load_Photos() {
     oReq.send("photos_loaded"); // send GET request to server
 }
 
-function appendImage(imageURL_input, favorite) {
-    var imageURL = imageURL_input;
-    // create container for image and its properties
-    var flexBox = document.createElement("div");
-    flexBox.className = "flexy";
-
-    // creat container for image itself
-    var imageDiv = document.createElement("div");
-    imageDiv.className = "imageContainer";;
-    imageDiv.id = imageURL;
-    flexBox.appendChild(imageDiv);
-
-    // create image element
-    var image = document.createElement("img");
-    image.src = imageURL;
-    image.id = "image:"+imageURL;
-    image.className = "imageDiv";
-
-    // append image to its container
-    imageDiv.appendChild(image);
-
-    // create container for hamburger menu and options for image
-    var imgOptionsDiv = document.createElement("div")
-    imgOptionsDiv.className = "imgOptionsDiv";
-
-    // create container for change tags and favorite button
-    var menu = document.createElement("div");
-    menu.className = "imgMenu";
-    menu.id = "imgMenu:"+imageURL;
-
-    // create change tags button
-    var changeTagsButton = document.createElement("button");
-    changeTagsButton.className = "imgOptionsButton";
-    changeTagsButton.textContent = "change tags";
-    changeTagsButton.setAttribute("onClick", "change_tags('"+imageURL+"')");
-    menu.appendChild(changeTagsButton);
-
-    // create favorite button
-    var favButton = document.createElement("button");
-    favButton.className = "imgOptionsButton";
-    favButton.id = "favorite:"+imageURL;
-    if (favorite) {
-        favButton.textContent = "unfavorite";
-        favButton.setAttribute("onClick", "mark_favorite('"+imageURL+"',"+favorite+")");
-    } else {
-        favButton.textContent = "add to favorites";
-        favButton.setAttribute("onClick", "mark_favorite('"+imageURL+"',"+favorite+")");
-    }
-    menu.appendChild(favButton);
-
-    // create container for hamburger image
-    var burgerImageDiv = document.createElement("button");
-    burgerImageDiv.className = "burgerImageDiv";
-    burgerImageDiv.id = "burgerButton:"+imageURL;
-    burgerImageDiv.setAttribute("onClick", "open_menu('"+imageURL+"')");
-
-    // create hamburger image
-    var burgerMenu = document.createElement("img");
-    burgerMenu.className = "burgerMenu";
-    burgerMenu.backgroundImage = imageURL;
-    burgerMenu.src = "photobooth/optionsTriangle.svg";
-
-    // append burger menu to image
-    imgOptionsDiv.appendChild(menu);
-    burgerImageDiv.appendChild(burgerMenu);
-    imgOptionsDiv.appendChild(burgerImageDiv);
-    imageDiv.appendChild(imgOptionsDiv);
-
-    // create container for image labels and load any existing labels from database
-    var labelBox = document.createElement("div");
-    labelBox.className = "labelBox";
-    labelBox.id = "labelBox:"+imageURL;
-    photo_label_load(imageURL, labelBox);
-    flexBox.appendChild(labelBox);
-
-    // append labels input text box
-    append_labelInput(flexBox, imageURL);
-
-    // append entire container to the DOM
-    var photosContainer = document.getElementById("threePhotosContainer");
-
-    // if no photos currently displayed, just append image
-    if (photosContainer.children.length == 0) {
-        photosContainer.append(flexBox);
-    } else { // append image in front of other images
-        photosContainer.insertBefore(flexBox, photosContainer.children[0]);
-    }
-}
-
 function change_tags(imageName) {
     close_menu(imageName);
     var labelBox = document.getElementById("labelBox:"+imageName);
@@ -253,88 +161,6 @@ function close_menu(imageName) {
     var burgerMenu = document.getElementById("burgerButton:"+imageName);
     burgerMenu.setAttribute("onClick", "open_menu('"+imageName+"')");
     burgerMenu.style.backgroundColor = "rgba(0,0,0,0)";
-}
-
-function photo_label_load(image_url, label_Box) {
-    var imageURL = image_url;
-
-    // get data from database
-    var oReq = new XMLHttpRequest();
-    oReq.open("GET", url+"/query?load_images", true);
-
-    // when data from database is loaded
-    oReq.onload = function() {
-        var obj = JSON.parse(oReq.responseText);
-        // find image data
-        var saveI = 0;
-        for(var i = 0; i < obj.length; i++) {
-            if(obj[i].fileName == imageURL) {
-                saveI = i;
-                console.log("print labels for:"+obj[i].fileName);
-                break;
-            }
-        }
-
-        var labelsArray = obj[saveI].labels.split(",");
-        console.log("test print labels:"+ labelsArray.length);
-        // append labels to DOM
-        for(var i = 0; i < labelsArray.length; i++) {
-            console.log("test print labels:"+ labelsArray[i]);
-            if(labelsArray[i]!="") {
-                tag_append( obj[saveI].fileName,label_Box, decodeURI(labelsArray[i]) ); //decoded here to remove spaces in label when displayed
-            }
-        }
-    }
-    oReq.send("emptytest"); //this is where it post the data in. the send is important.
-}
-
-function tag_append(originalFileName,label_Box, labels_Array_i) {
-    var tag = document.createElement("div");
-    var crossContainer = document.createElement("div");
-    var tag_name = document.createElement("div");
-    tag_name.className ="tag_name";
-    tag.className = "tag";
-    tag.id = "tag:"+originalFileName+':'+labels_Array_i;
-
-    var crossImg = document.createElement("img");
-    crossImg.className = "cross_Image";
-    crossContainer.setAttribute( "onClick", "delete_tag('"+originalFileName+"','"+labels_Array_i+"')" );
-    crossImg.src = "photobooth/removeTagButton.png";
-    tag_name.textContent = labels_Array_i;
-    crossContainer.appendChild(crossImg);
-
-    tag.appendChild(crossContainer);
-    tag.appendChild(tag_name);
-
-    //Add_label stuff
-    var labelAdderDiv = document.createElement("div");
-    var labelAdder = document.createElement("label_adder");
-
-    // the tag appends the Image
-    label_Box.appendChild(tag);
-}
-
-function append_labelInput(container, originalFileName) {
-    var labelInput = document.createElement("input");
-    labelInput.type = "text";
-    labelInput.className ="labelInput";
-    labelInput.placeholder = "type new label";
-    console.log("added input text?");
-
-    var labelInputContain = document.createElement("div");
-    labelInputContain.className = "labelInputDiv";
-    labelInputContain.id = "labelInputDiv:"+originalFileName;
-
-    var labelAddDiv = document.createElement("div");
-    var labelAddButton = document.createElement("button");
-    labelAddButton.className = "label_add_button";
-    labelAddButton.setAttribute("onClick", "add_label('"+originalFileName+"')");
-    labelAddButton.textContent = "Add";
-    labelAddDiv.appendChild(labelAddButton);
-
-    labelInputContain.appendChild(labelInput);
-    labelInputContain.appendChild(labelAddDiv);
-    container.appendChild(labelInputContain);
 }
 
 function add_label(imageName) {

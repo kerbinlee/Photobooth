@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import PhotoGrid from './PhotoGrid';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App/>
+    <PhotoGrid url="http://localhost:8080/"/>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('threePhotosContainer')
 );
 
 // If you want your app to work offline and load faster, you can change
