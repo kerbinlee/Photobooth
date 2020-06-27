@@ -6,7 +6,7 @@ import PhotoGrid from './PhotoGrid';
 
 ReactDOM.render(
   <React.StrictMode>
-    <PhotoGrid url="http://localhost:8080/"/>
+    <PhotoGrid/>
   </React.StrictMode>,
   document.getElementById('threePhotosContainer')
 );

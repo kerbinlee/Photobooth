@@ -1,9 +1,10 @@
 import React from 'react';
 import Labels from './Labels';
 import BurgerButton from './BurgerButton';
+import Constants from './Constants';
 
 export interface PhotoProps {
-  imageURL: string,
+  fileName: string,
   favorite: boolean,
 }
 
@@ -39,21 +40,21 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
 
     return (
       <div className="flexy">
-        <div id={this.props.imageURL} className="imageContainer">
-          <img id={"image:" + this.props.imageURL} className="imageDiv" src={this.props.imageURL} />
+        <div id={this.props.fileName} className="imageContainer">
+          <img id={"image:" + this.props.fileName} className="imageDiv" src={Constants.baseURL + this.props.fileName} />
           <div className="imgOptionsDiv">
-            <div id={"imgMenu:" + this.props.imageURL} className="imgMenu" style={imgMenuStyle}>
+            <div id={"imgMenu:" + this.props.fileName} className="imgMenu" style={imgMenuStyle}>
               <button className="imgOptionsButton">change tags</button>
               {/* changeTagsButton.setAttribute("onClick", "change_tags('"+imageURL+"')"); */}
-              <button id={"favorite:" + this.props.imageURL} className="imgOptionsButton">
+              <button id={"favorite:" + this.props.fileName} className="imgOptionsButton">
                 {this.props.favorite ? "unfavorite" : "add to favorites"}
                 {/* favButton.setAttribute("onClick", "mark_favorite('"+imageURL+"',"+favorite+")"); */}
               </button>
             </div>
-            <BurgerButton imageURL={this.props.imageURL} favorite={this.props.favorite} handleClick={this.handleClick} isMenuOpen={this.state.isMenuOpen}/>
+            <BurgerButton imageURL={this.props.fileName} favorite={this.props.favorite} handleClick={this.handleClick} isMenuOpen={this.state.isMenuOpen}/>
           </div>
         </div>
-        <Labels imageURL={this.props.imageURL} favorite={this.props.favorite} />
+        <Labels fileName={this.props.fileName} favorite={this.props.favorite}/>
       </div>
     );
   }
