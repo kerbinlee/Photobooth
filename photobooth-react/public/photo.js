@@ -163,52 +163,6 @@ function close_menu(imageName) {
     burgerMenu.style.backgroundColor = "rgba(0,0,0,0)";
 }
 
-function add_label(imageName) {
-    /// ADD DOESN"T WORK BECAUSE you need to box images DIV together
-    var new_label = document.getElementById(imageName).parentElement.childNodes[2].childNodes[0].value;
-
-    console.log("adding tag, beggining:  " + new_label);
-    var imageURL = imageName;
-    //var tag_name
-    var oReq = new XMLHttpRequest();
-    oReq.open("GET", url+"/query?load_images", true);
-
-    var newArray ="";
-    oReq.onload = function() {
-        var obj = JSON.parse(oReq.responseText);
-        var saveI = 0;
-        for( var i = 0; i < obj.length; i++) {
-            if (obj[i].fileName == imageURL) {
-                saveI = i;
-                console.log("print labels for:"+obj[i].fileName);
-                break;
-            }
-        }
-
-        if (obj[saveI].labels != "") {
-            newArray = obj[saveI].labels +","+new_label;
-            console.log("newARRAY: additional label is:"+ url+"/query?"+"add_label?"+imageName+"?"+newArray);
-            var oReqTwo = new XMLHttpRequest();
-            oReqTwo.open("POST", url+"/query?"+"add_label?"+imageName+"?"+newArray, true);
-            oReqTwo.onload = function() {
-                var label_Box = document.getElementById("labelBox:"+imageName);
-                tag_append(imageName,label_Box, new_label);
-            }
-            oReqTwo.send();
-        } else {
-            newArray = new_label;
-            console.log("single added label,  is:"+ url+"/query?"+"add_label?"+imageName+"?"+newArray);
-            var oReqThree= new XMLHttpRequest();
-            oReqThree.open("POST", url+"/query?"+"add_label?"+imageName+"?"+newArray, true);
-            oReqThree.send();
-        }
-    }
-
-    oReq.send("emptytest"); //this is where it post the data in. the send is important.
-
-    change_tags_close(imageName);
-}
-
 function delete_tag(image_url, tag_name) {
     console.log("delete_tag_start DB request:" + tag_name);
     var imageURL = image_url;

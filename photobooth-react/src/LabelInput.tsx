@@ -2,13 +2,22 @@ import React from 'react';
 
 export interface LabelInputProps {
   fileName: string,
+  labelValue: string,
+  labelValueOnChange: (event: React.FormEvent<HTMLInputElement>) => void,
+  addLabelMethod: () => void,
 }
 
 export interface LabelInputState {
+  newLabel: string,
 }
 
 class LabelInput extends React.Component<LabelInputProps, LabelInputState> {
-  state = {
+  constructor(props: LabelInputProps) {
+    super(props);
+
+    this.state = {
+      newLabel: "",
+    }
   }
 
   componentDidMount() {
@@ -22,11 +31,12 @@ class LabelInput extends React.Component<LabelInputProps, LabelInputState> {
     const labelInputStyle = {display: 'block'};
     return (
       <div id={"labelInputDiv:" + this.props.fileName} style={labelInputStyle}>
-        <input type="text" className="labelInput" placeholder="type new label"></input>
+        <form onSubmit={this.props.addLabelMethod}>
+        <input type="text" className="labelInput" placeholder="type new label" value={this.props.labelValue} onChange={this.props.labelValueOnChange}/>
         <div>
-          <button className="label_add_button">Add</button>
-          {/* labelAddButton.setAttribute("onClick", "add_label('"+originalFileName+"')"); */}
+          <input type="button" className="label_add_button" value="Add" onClick={this.props.addLabelMethod}/>
         </div>
+        </form>
       </div>
     )
   }
