@@ -29,6 +29,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     this.chnageTags = this.chnageTags.bind(this);
     this.addLabel = this.addLabel.bind(this);
     this.updateLabel = this.updateLabel.bind(this);
+    this.deleteTag = this.deleteTag.bind(this);
   }
 
   componentDidMount() {
@@ -119,6 +120,50 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     this.setState({isChangingTag: false});
   }
 
+  deleteTag(tagName: string): void {
+    const oReq = new XMLHttpRequest();
+    oReq.open("GET", Constants.baseURL + "query?load_images", true);
+    let newArray = "";
+    oReq.onload = () => {
+      const obj = JSON.parse(oReq.responseText);
+      let saveI = 0;
+      for (let i = 0; i < obj.length; i++) {
+        if (obj[i].fileName === this.props.fileName) {
+          saveI = i;
+          break;
+        }
+      }
+
+      const labelsArray = obj[saveI].labels.split(",");
+      let countLabels = 0;
+      for (let i = 0; i < labelsArray.length; i++) {
+        if (labelsArray[i] !== tagName) {
+          if (countLabels === 0) {
+            newArray = newArray + labelsArray[i];
+            countLabels++;
+          } else {
+            newArray = newArray + ",";
+            newArray = newArray + labelsArray[i];
+          }
+        }
+      }
+
+      const oReqTwo = new XMLHttpRequest();
+      oReqTwo.open("POST", Constants.baseURL + "query?delete_tag?" + this.props.fileName + "?" + newArray, true);
+      oReqTwo.onload = () => {
+        this.setState(
+          {
+            labels: newArray.split(","),
+            isChangingTag: false,
+          }
+        )
+      }
+      oReqTwo.send("deleted tag");
+    }
+
+    oReq.send();
+  }
+
   render() {
     const imgMenuStyle = {
       display: this.state.isMenuOpen ? 'flex' : 'none',
@@ -140,7 +185,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
             <BurgerButton imageURL={this.props.fileName} favorite={this.props.favorite} handleClick={this.handleClick} isMenuOpen={this.state.isMenuOpen}/>
           </div>
         </div>
-        <Labels fileName={this.props.fileName} favorite={this.props.favorite} isChangingTag={this.state.isChangingTag} addLabelMethod={this.addLabel} labelValue={this.state.labelInputValue} labelValueOnChange={this.updateLabel} labels={this.state.labels}/>
+        <Labels fileName={this.props.fileName} favorite={this.props.favorite} isChangingTag={this.state.isChangingTag} addLabelMethod={this.addLabel} labelValue={this.state.labelInputValue} labelValueOnChange={this.updateLabel} labels={this.state.labels} deleteTagMethod={this.deleteTag}/>
       </div>
     );
   }

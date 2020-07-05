@@ -163,56 +163,6 @@ function close_menu(imageName) {
     burgerMenu.style.backgroundColor = "rgba(0,0,0,0)";
 }
 
-function delete_tag(image_url, tag_name) {
-    console.log("delete_tag_start DB request:" + tag_name);
-    var imageURL = image_url;
-    var oReq = new XMLHttpRequest();
-    oReq.open("GET", url+"/query?load_images", true);
-    var newArray = "";
-    oReq.onload = function() {
-        var obj = JSON.parse(oReq.responseText);
-        var saveI = 0;
-        for (var i = 0; i < obj.length; i++) {
-            if (obj[i].fileName == imageURL) {
-                saveI = i;
-                console.log("print labels for:"+obj[i].fileName);
-                break;
-            }
-        }
-
-        console.log("current labels list: "+ obj[saveI].labels);
-        var labelsArray = obj[saveI].labels.split(",");
-        console.log("test print labels length:"+ labelsArray.length);
-        var countLabels = 0;
-        for (var i = 0; i < labelsArray.length; i++) {
-            console.log("test print labels:"+ labelsArray[i]);
-            if (labelsArray[i] != tag_name) {
-                if (countLabels == 0) {
-                    newArray = newArray + labelsArray[i];
-                    countLabels++;
-                } else {
-                    newArray = newArray + ",";
-                    newArray = newArray + labelsArray[i];
-                }
-            }
-        }
-        console.log("new array with removed label is:"+ newArray);
-
-        var oReqTwo = new XMLHttpRequest();
-        oReqTwo.open("POST", url+"/query?delete_tag?"+imageURL+"?"+newArray, true);
-        oReqTwo.onload = function() {
-            console.log("updating deleted array with new array:" + oReq.responseText);
-            var tagDiv = document.getElementById("tag:"+imageURL+':'+tag_name);
-            var tagDivParent = tagDiv.parentElement;
-            tagDivParent.removeChild(tagDiv);
-        }
-        oReqTwo.send("deleted tag"); //this is where it post the data in. the send is important.
-    }
-
-    oReq.send("emptytest"); //this is where it post the data in. the send is important.
-    change_tags_close(imageURL);
-}
-
 function mark_favorite(imageName, yesOrNo) {
     close_menu(imageName);
     var newYesOrNo = 0;

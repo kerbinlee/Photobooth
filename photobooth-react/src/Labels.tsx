@@ -10,6 +10,7 @@ export interface LabelsProps {
   labelValueOnChange: (event: React.FormEvent<HTMLInputElement>) => void,
   addLabelMethod: () => void,
   labels: string[],
+  deleteTagMethod: (tagName: string) => void,
 }
 
 export interface LabelsState {
@@ -29,7 +30,7 @@ class Labels extends React.Component<LabelsProps, LabelsState> {
     }
 
     const tags = this.props.labels.map((tag, index) => 
-      <Tag originalFileName={this.props.fileName} labelsArrayI={tag} isChangingTag={this.props.isChangingTag} key={index}/>
+      <Tag fileName={this.props.fileName} labelsArrayI={tag} isChangingTag={this.props.isChangingTag} key={index} deleteTagMethod={this.props.deleteTagMethod}/>
     );
 
     let labelInput;
