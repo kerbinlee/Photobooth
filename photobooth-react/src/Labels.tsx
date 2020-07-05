@@ -34,7 +34,7 @@ class Labels extends React.Component<LabelsProps, LabelsState> {
     );
 
     let labelInput;
-    if (this.props.labels.length < 10) {
+    if (this.props.isChangingTag && this.props.labels.length < 10) {
       labelInput = <LabelInput fileName={this.props.fileName} addLabelMethod={this.props.addLabelMethod} labelValue={this.props.labelValue} labelValueOnChange={this.props.labelValueOnChange}/>
     }
 

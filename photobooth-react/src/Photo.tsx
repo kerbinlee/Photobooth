@@ -176,7 +176,6 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
           <div className="imgOptionsDiv">
             <div id={"imgMenu:" + this.props.fileName} className="imgMenu" style={imgMenuStyle}>
               <button className="imgOptionsButton" onClick={this.chnageTags}>change tags</button>
-              {/* changeTagsButton.setAttribute("onClick", "change_tags('"+imageURL+"')"); */}
               <button id={"favorite:" + this.props.fileName} className="imgOptionsButton">
                 {this.props.favorite ? "unfavorite" : "add to favorites"}
                 {/* favButton.setAttribute("onClick", "mark_favorite('"+imageURL+"',"+favorite+")"); */}
