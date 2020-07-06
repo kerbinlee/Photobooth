@@ -32,7 +32,7 @@ class Tag extends React.Component<TagProps, TagState> {
     const crossImageStyle = {display: "block"};
     let crossImage;
     if (this.props.isChangingTag) {
-      crossImage = <img className="cross_Image" src="photobooth/removeTagButton.png" style={crossImageStyle}/>
+      crossImage = <img className="cross_Image" src="photobooth/removeTagButton.png" style={crossImageStyle} alt="Delete Tag Button"/>
     }
     
     return (

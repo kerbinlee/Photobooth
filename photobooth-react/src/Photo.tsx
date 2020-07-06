@@ -172,7 +172,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     return (
       <div className="flexy">
         <div id={this.props.fileName} className="imageContainer">
-          <img id={"image:" + this.props.fileName} className="imageDiv" src={Constants.baseURL + this.props.fileName} />
+          <img id={"image:" + this.props.fileName} className="imageDiv" src={Constants.baseURL + this.props.fileName} alt={"Image with tags " + this.state.labels.join(", ")}/>
           <div className="imgOptionsDiv">
             <div id={"imgMenu:" + this.props.fileName} className="imgMenu" style={imgMenuStyle}>
               <button className="imgOptionsButton" onClick={this.chnageTags}>change tags</button>

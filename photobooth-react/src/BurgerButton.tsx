@@ -23,7 +23,7 @@ class BurgerButton extends React.Component<BurgerButtonProps, BurgerButtonState>
 
     return (
       <button id={"burgerButton:" + this.props.imageURL} className="burgerImageDiv" style={burgerButtonStyle} onClick={this.props.handleClick}>
-        <img className="burgerMenu" src="photobooth/optionsTriangle.svg" />
+        <img className="burgerMenu" src="photobooth/optionsTriangle.svg" alt="Option Button"/>
       </button>
     );
   }
