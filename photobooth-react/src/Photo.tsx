@@ -13,6 +13,7 @@ export interface PhotoState {
   isChangingTag: boolean,
   labelInputValue: string,
   labels: string[],
+  isFavorite: boolean,
 }
 
 class Photo extends React.Component<PhotoProps, PhotoState> {
@@ -23,6 +24,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
       isChangingTag: false,
       labelInputValue: "",
       labels: [],
+      isFavorite: props.favorite,
     }
 
     this.handleClick = this.handleClick.bind(this);
@@ -30,6 +32,7 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     this.addLabel = this.addLabel.bind(this);
     this.updateLabel = this.updateLabel.bind(this);
     this.deleteTag = this.deleteTag.bind(this);
+    this.markFavorite = this.markFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -164,6 +167,23 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
     oReq.send();
   }
 
+  markFavorite(): void {
+    const isFavorite: boolean = !this.state.isFavorite;
+    const newYesOrNo: number = isFavorite ? 1 : 0;
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", Constants.baseURL + "query?mark_favorite?" + this.props.fileName + "?" + newYesOrNo, true);
+    xhr.onload = () => {
+      this.setState(
+        {
+          isFavorite: isFavorite,
+          isMenuOpen: false,
+        }
+      );
+    }
+    xhr.send();
+  }
+
   render() {
     const imgMenuStyle = {
       display: this.state.isMenuOpen ? 'flex' : 'none',
@@ -176,15 +196,14 @@ class Photo extends React.Component<PhotoProps, PhotoState> {
           <div className="imgOptionsDiv">
             <div id={"imgMenu:" + this.props.fileName} className="imgMenu" style={imgMenuStyle}>
               <button className="imgOptionsButton" onClick={this.chnageTags}>change tags</button>
-              <button id={"favorite:" + this.props.fileName} className="imgOptionsButton">
-                {this.props.favorite ? "unfavorite" : "add to favorites"}
-                {/* favButton.setAttribute("onClick", "mark_favorite('"+imageURL+"',"+favorite+")"); */}
+              <button id={"favorite:" + this.props.fileName} className="imgOptionsButton" onClick={this.markFavorite}>
+                {this.state.isFavorite ? "unfavorite" : "add to favorites"}
               </button>
             </div>
-            <BurgerButton imageURL={this.props.fileName} favorite={this.props.favorite} handleClick={this.handleClick} isMenuOpen={this.state.isMenuOpen}/>
+            <BurgerButton imageURL={this.props.fileName} favorite={this.state.isFavorite} handleClick={this.handleClick} isMenuOpen={this.state.isMenuOpen}/>
           </div>
         </div>
-        <Labels fileName={this.props.fileName} favorite={this.props.favorite} isChangingTag={this.state.isChangingTag} addLabelMethod={this.addLabel} labelValue={this.state.labelInputValue} labelValueOnChange={this.updateLabel} labels={this.state.labels} deleteTagMethod={this.deleteTag}/>
+        <Labels fileName={this.props.fileName} favorite={this.state.isFavorite} isChangingTag={this.state.isChangingTag} addLabelMethod={this.addLabel} labelValue={this.state.labelInputValue} labelValueOnChange={this.updateLabel} labels={this.state.labels} deleteTagMethod={this.deleteTag}/>
       </div>
     );
   }

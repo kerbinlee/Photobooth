@@ -163,35 +163,6 @@ function close_menu(imageName) {
     burgerMenu.style.backgroundColor = "rgba(0,0,0,0)";
 }
 
-function mark_favorite(imageName, yesOrNo) {
-    close_menu(imageName);
-    var newYesOrNo = 0;
-    if (yesOrNo == 0) {
-        newYesOrNo = 1;
-    }
-
-    var oReqTwo = new XMLHttpRequest();
-    oReqTwo.open("POST", url+"/query?mark_favorite?"+imageName+"?"+newYesOrNo, true);
-    oReqTwo.onload = function() {
-        var favButton = document.getElementById("favorite:"+imageName);
-        var favButtonParent = favButton.parentElement;
-        favButtonParent.removeChild(favButton);
-        favButton = document.createElement("button");
-        favButton.className = "imgOptionsButton";
-        favButton.id = "favorite:"+imageName;
-        if (yesOrNo) {
-            favButton.textContent = "add to favorites";
-            favButton.setAttribute("onClick", "mark_favorite('"+imageName+"',0)");
-            favButtonParent.appendChild(favButton);
-        } else {
-            favButton.textContent = "unfavorite";
-            favButton.setAttribute("onClick", "mark_favorite('"+imageName+"',1)");
-            favButtonParent.appendChild(favButton);
-        }
-    }
-    oReqTwo.send();
-}
-
 function enterInputTagSearch(event) {
     if (event.keyCode == 13) {
         var answer = document.getElementById("search_tag_input").value;
